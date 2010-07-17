@@ -78,6 +78,8 @@ function check(word, list) {
       list[i].className = 'selected';
       if (word.length == 1 || check(word.slice(1), list[i].neighbors)) {
         return true;
+      } else {
+        list[i].className = null;
       }
     }
   }
