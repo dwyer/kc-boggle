@@ -52,7 +52,7 @@ Field.prototype.putLetter = function (row, col, letter) {
 
 function handleInput(input) {
   // validate
-  var isValid = check(input.value, cells);
+  var isValid = check(input.value.toUpperCase(), cells);
   if (isValid) {
     input.className = 'valid';
   } else {
