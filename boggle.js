@@ -66,6 +66,7 @@ function handleInput(input) {
   if (window.event && window.event.keyCode == 13 && isValid) {
     var word = document.createElement('div');
     word.appendChild(document.createTextNode(input.value));
+    var score = document.createTextNode(input.value.length);
     var button = document.createElement('button');
     button.innerHTML = '&times;';
     button.onclick = function () {
@@ -73,13 +74,14 @@ function handleInput(input) {
       child.parentNode.removeChild(child);
     };
     var words = document.getElementById('words');
-    words.insertRow(0);
-    words.rows[0].insertCell(0);
-    words.rows[0].insertCell(1);
-    words.rows[0].insertCell(2);
-    words.rows[0].cells[0].appendChild(word);
-    //words.rows[0].cells[1].appendChild(word);
-    words.rows[0].cells[2].appendChild(button);
+    var row = 1;
+    words.insertRow(row);
+    words.rows[row].insertCell(0);
+    words.rows[row].insertCell(1);
+    words.rows[row].insertCell(2);
+    words.rows[row].cells[0].appendChild(word);
+    words.rows[row].cells[1].appendChild(score);
+    words.rows[row].cells[2].appendChild(button);
     input.value = '';
   }
 }

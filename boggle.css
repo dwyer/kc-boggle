@@ -7,6 +7,11 @@ table {
   margin: auto;
 }
 
+table tr th {
+  font-size: small;
+  font-weight: normal;
+}
+
 table tr td {
   border: 1px solid lightgray;
 }
@@ -37,10 +42,10 @@ table#field tr td {
 }
 
 table#words {
-  width: 320px;
+  width: 200px;
 }
 
-table#words tr td:first-child {
+table#words tr th:first-child {
   width: 100%;
 }
 
