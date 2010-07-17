@@ -71,12 +71,8 @@ function handleInput(input) {
 function check(word, list) {
   for (var i = 0; i < list.length; i++) {
     if (list[i].innerHTML == word[0]) {
-      if (word.length == 1) {
+      if (word.length == 1 || check(word.slice(1), list[i].neighbors)) {
         return true;
-      } else {
-        if (check(word.slice(1), list[i].neighbors)) {
-          return true;
-        }
       }
     }
   }
