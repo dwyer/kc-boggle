@@ -1,0 +1,25 @@
+body {
+  text-align: center;
+}
+
+table {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+table tr td {
+  border: 1px dotted lightgray;
+  height: 32px;
+  text-align: center;
+  width: 32px;
+}
+
+input.valid {
+  color: green;
+}
+
+input.invalid {
+  color: red;
+}
+
