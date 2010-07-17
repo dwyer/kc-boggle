@@ -76,7 +76,10 @@ function check(word, list) {
   for (var i = 0; i < list.length; i++) {
     if (list[i].innerHTML == word[0] && list[i].className != 'selected') {
       list[i].className = 'selected';
-      if (word.length == 1 || check(word.slice(1), list[i].neighbors)) {
+      if (word.length == 1) {
+        list[i].className = 'infocus';
+        return true;
+      } else if (check(word.slice(1), list[i].neighbors)) {
         return true;
       } else {
         list[i].className = null;

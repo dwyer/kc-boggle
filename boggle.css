@@ -16,6 +16,12 @@ table tr td {
 }
 
 table tr td.selected {
+  color: green;
+  font-weight: bold;
+}
+
+table tr td.infocus {
+  color: orange;
   font-weight: bold;
 }
 
