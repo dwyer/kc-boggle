@@ -1,10 +1,9 @@
+var cells = [];
 var dice = [
     'PCHOAS', 'OATTOW', 'LRYTTE', 'VTHRWE', 'EGHWNE', 'SEOTIS', 'ANAEEG',
     'IDSYTT', 'MTOICU', 'AFPKFS', 'XLDERI', 'ENSIEU', 'YLDEVR', 'ZNRNHL',
     'NMIQHU', 'OBBAOJ'
 ];
-
-var cells = [];
 
 
 function Field() {
