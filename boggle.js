@@ -51,6 +51,10 @@ Field.prototype.putLetter = function (row, col, letter) {
 
 
 function handleInput(input) {
+  // unselect all cells
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].className = null;
+  }
   // validate
   var isValid = check(input.value.toUpperCase(), cells);
   if (isValid) {
@@ -70,7 +74,8 @@ function handleInput(input) {
 
 function check(word, list) {
   for (var i = 0; i < list.length; i++) {
-    if (list[i].innerHTML == word[0]) {
+    if (list[i].innerHTML == word[0] && list[i].className != 'selected') {
+      list[i].className = 'selected';
       if (word.length == 1 || check(word.slice(1), list[i].neighbors)) {
         return true;
       }

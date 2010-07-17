@@ -15,6 +15,10 @@ table tr td {
   width: 32px;
 }
 
+table tr td.selected {
+  font-weight: bold;
+}
+
 input.valid {
   color: green;
 }
