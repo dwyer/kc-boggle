@@ -1,3 +1,4 @@
+var seconds = 180;
 var cells = [];
 var dice = [
     'PCHOAS', 'OATTOW', 'LRYTTE', 'VTHRWE', 'EGHWNE', 'SEOTIS', 'ANAEEG',
@@ -104,7 +105,22 @@ function check(word, list) {
 }
 
 
+function displayTime() {
+  var time = Math.floor(seconds / 60) + ':' + seconds % 60;
+  document.getElementById('time').innerHTML = time;
+}
+
+
 window.onload = function () {
   var field = new Field();
+  displayTime();
+  var id = window.setInterval(function () {
+    seconds--;
+    displayTime();
+    if (seconds == 0) {
+      clearInterval(id);
+      document.getElementById('input').disabled = true;
+    }
+  }, 1000);
 };
 
