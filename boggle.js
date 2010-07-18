@@ -109,22 +109,44 @@ function displayTime() {
 }
 
 
+function getScore(word) {
+  var score = 0;
+  var len = word.length;
+  if (len == 3 || len == 4) {
+    score = 1;
+  } else if (len == 5) {
+    score = 2;
+  } else if (len == 6) {
+    score = 3;
+  } else if (len == 7) {
+    score = 5;
+  } else if (len >= 8) {
+    score = 11;
+  }
+  if (dict.indexOf(word) == -1) {
+    score = -score;
+  }
+  return score;
+}
+
+
 function gameOver() {
   document.getElementById('input').disabled = true;
   var words = document.getElementById('words');
+  var score = 0;
   for (var i = 1; i < words.rows.length; i++) {
     var word = words.rows[i].cells[0].innerHTML.toLowerCase();
-    var score = 0
-    if (dict.indexOf(word) >= 0) {
-      score = word.length;
-    }
-    words.rows[i].cells[1].innerHTML = score;
+    var points = getScore(word);
+    score += points;
+    words.rows[i].cells[1].innerHTML = points;
   }
+  document.getElementById('score').innerHTML = score;
 }
 
 
 window.onload = function () {
   var field = new Field();
+  document.getElementById('input').focus();
   displayTime();
   var id = window.setInterval(function () {
     seconds--;

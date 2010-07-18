@@ -15,14 +15,17 @@
       <tr><td></td><td></td><td></td><td></td></tr>
     </table>
     <input id="input" type="text" onkeyup="handleInput(this);" />
-    <div>Time: <span id="time"></span></div>
+    <div>
+      Time: <span id="time"></span>,
+      Score: <span id="score">?</span>
+    </div>
     <table id="words">
       <tr>
         <th>Words</th>
         <th>Score</th>
       </tr>
     </table>
-    <div style="font-size:small;color:gray;">TODO: handling scoring, dupes, etc.</div>
+    <div style="font-size:small;color:gray;">TODO: handling dupes, etc.</div>
     <div>Debug: <button onclick="gameOver();">End game</button></div>
   </body>
 </html>
