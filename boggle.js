@@ -64,9 +64,7 @@ function handleInput(input) {
   }
   // handle submission
   if (window.event && window.event.keyCode == 13 && isValid) {
-    var word = document.createElement('div');
-    word.appendChild(document.createTextNode(input.value));
-    var score = document.createTextNode(input.value.length);
+    var word = document.createTextNode(input.value);
     var button = document.createElement('button');
     button.innerHTML = '&times;';
     button.onclick = function () {
@@ -78,10 +76,8 @@ function handleInput(input) {
     words.insertRow(row);
     words.rows[row].insertCell(0);
     words.rows[row].insertCell(1);
-    words.rows[row].insertCell(2);
     words.rows[row].cells[0].appendChild(word);
-    //words.rows[row].cells[1].appendChild(score);
-    words.rows[row].cells[2].appendChild(button);
+    words.rows[row].cells[1].appendChild(button);
     input.value = '';
   }
 }
@@ -117,7 +113,12 @@ function gameOver() {
   document.getElementById('input').disabled = true;
   var words = document.getElementById('words');
   for (var i = 1; i < words.rows.length; i++) {
-    words.rows[i].cells[1].innerHTML = words.rows[i].cells[0].length;
+    var word = words.rows[i].cells[0].innerHTML.toLowerCase();
+    var score = 0
+    if (dict.indexOf(word) >= 0) {
+      score = word.length;
+    }
+    words.rows[i].cells[1].innerHTML = score;
   }
 }
 

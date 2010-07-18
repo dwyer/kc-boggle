@@ -5,6 +5,7 @@
     <title>kc-boggle</title>
     <link rel="stylesheet" type="text/css" href="boggle.css" />
     <script type="text/javascript" src="boggle.js"></script>
+    <script type="text/javascript" src="dict.js"></script>
   </head>
   <body>
     <table id="field">
@@ -15,11 +16,11 @@
     </table>
     <input id="input" type="text" onkeyup="handleInput(this);" />
     <div>Time: <span id="time"></span></div>
+    <div>Debug: <button onclick="gameOver();">End game</button></div>
     <table id="words">
       <tr>
         <th>Words</th>
-        <th>Points</th>
-        <th>Remove</th>
+        <th>Score</th>
       </tr>
     </table>
     <div style="font-size:small;color:gray;">TODO: handling scoring, dupes, etc.</div>
