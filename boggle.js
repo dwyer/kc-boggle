@@ -9,18 +9,25 @@ var dice = [
 
 
 /**
+ * Shuffles the contents of an Array.
+ */
+Array.prototype.shuffle = function () {
+  for (var rnd, tmp, i = this.length; i; rnd = parseInt(Math.random() * i),
+      tmp = this[--i], this[i] = this[rnd], this[rnd] = tmp);
+};
+
+
+/**
  * Constructs a Field object.
  */
 function Field() {
   this.range = 4;
   this.table = document.getElementById('field');
   // handle letters
-  for (var row = 0; row < this.range; row++) {
-    for (var col = 0; col < this.range; col++) {
-      var die = dice.pop(Math.floor(Math.random()*dice.length));
-      var side = die[Math.floor(Math.random()*6)];
-      this.putLetter(row, col, side);
-    }
+  dice.shuffle();
+  for (var die = 0; die < dice.length; die++) {
+    this.putLetter(Math.floor(die / 4), die % 4,
+        dice[die][Math.floor(Math.random() * 6)]);
   }
   // handle neighbors
   for (var row = 0; row < this.range; row++) {
