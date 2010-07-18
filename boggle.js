@@ -1,4 +1,5 @@
 var seconds = 180;
+var words = [];
 var cells = [];
 var dice = [
     'PCHOAS', 'OATTOW', 'LRYTTE', 'VTHRWE', 'EGHWNE', 'SEOTIS', 'ANAEEG',
@@ -7,6 +8,9 @@ var dice = [
 ];
 
 
+/**
+ * Constructs a Field object.
+ */
 function Field() {
   this.range = 4;
   this.table = document.getElementById('field');
@@ -40,18 +44,27 @@ function Field() {
 }
 
 
+/**
+ * Get the letter contains at (row, col) of the Field.
+ */
 Field.prototype.getLetter = function (row, col) {
   return this.table.rows[row].cells[col].innerHTML;
 };
 
 
+/**
+ * Insert a letter at (row, col) of the Field.
+ */
 Field.prototype.putLetter = function (row, col, letter) {
   this.table.rows[row].cells[col].innerHTML = letter;
 };
 
 
+/**
+ * Handles word input and submission.
+ */
 function handleInput(input) {
-  // unselect all cells
+  // deselect all cells
   for (var i = 0; i < cells.length; i++) {
     cells[i].className = null;
   }
@@ -83,17 +96,20 @@ function handleInput(input) {
 }
 
 
-function check(word, list) {
-  for (var i = 0; i < list.length; i++) {
-    if (list[i].innerHTML == word[0] && list[i].className != 'selected') {
-      list[i].className = 'selected';
+/**
+ * Check the word against an array of letters to determine its validity.
+ */
+function check(word, array) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].innerHTML == word[0] && array[i].className != 'selected') {
+      array[i].className = 'selected';
       if (word.length == 1) {
-        list[i].className = 'infocus';
+        array[i].className = 'infocus';
         return true;
-      } else if (check(word.slice(1), list[i].neighbors)) {
+      } else if (check(word.slice(1), array[i].neighbors)) {
         return true;
       } else {
-        list[i].className = null;
+        array[i].className = null;
       }
     }
   }
@@ -101,6 +117,9 @@ function check(word, list) {
 }
 
 
+/**
+ * Display time left to play.
+ */
 function displayTime() {
   var mins = Math.floor(seconds / 60);
   var secs = seconds % 60;
@@ -109,6 +128,9 @@ function displayTime() {
 }
 
 
+/**
+ * Check word against dictionary and determine its worth.
+ */
 function getScore(word) {
   var score = 0;
   var len = word.length;
@@ -130,6 +152,9 @@ function getScore(word) {
 }
 
 
+/**
+ * Disable user input and determine final score.
+ */
 function gameOver() {
   document.getElementById('input').disabled = true;
   var words = document.getElementById('words');
@@ -144,6 +169,9 @@ function gameOver() {
 }
 
 
+/**
+ * Initialize game at load time.
+ */
 window.onload = function () {
   var field = new Field();
   document.getElementById('input').focus();
@@ -157,4 +185,3 @@ window.onload = function () {
     }
   }, 1000);
 };
-
