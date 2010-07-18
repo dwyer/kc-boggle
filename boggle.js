@@ -106,8 +106,10 @@ function check(word, list) {
 
 
 function displayTime() {
-  var time = Math.floor(seconds / 60) + ':' + seconds % 60;
-  document.getElementById('time').innerHTML = time;
+  var mins = Math.floor(seconds / 60);
+  var secs = seconds % 60;
+  var time = document.getElementById('time');
+  time.innerHTML = mins + (secs < 10 ? ':0' : ':') + secs;
 }
 
 
