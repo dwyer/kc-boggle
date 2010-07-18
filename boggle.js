@@ -79,7 +79,7 @@ Field.prototype.putLetter = function (row, col, letter) {
  */
 function handleInput(input) {
   var word = input.value.toLowerCase();
-  var isValid = validateWord(word);
+  var isValid = !!word && validateWord(word);
   input.className = isValid ? 'valid' : 'invalid';
   // handle submission
   if (window.event && window.event.keyCode == 13 && isValid) {
