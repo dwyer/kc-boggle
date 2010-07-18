@@ -8,6 +8,7 @@ table {
 }
 
 table tr th {
+  color: gray;
   font-size: small;
   font-weight: normal;
 }

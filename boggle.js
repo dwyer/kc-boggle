@@ -56,7 +56,7 @@ function handleInput(input) {
     cells[i].className = null;
   }
   // validate
-  var isValid = check(input.value.toUpperCase(), cells);
+  var isValid = check(input.value.toUpperCase(), cells) && input.value.length >= 3;
   if (isValid) {
     input.className = 'valid';
   } else {
@@ -80,7 +80,7 @@ function handleInput(input) {
     words.rows[row].insertCell(1);
     words.rows[row].insertCell(2);
     words.rows[row].cells[0].appendChild(word);
-    words.rows[row].cells[1].appendChild(score);
+    //words.rows[row].cells[1].appendChild(score);
     words.rows[row].cells[2].appendChild(button);
     input.value = '';
   }
@@ -113,6 +113,15 @@ function displayTime() {
 }
 
 
+function gameOver() {
+  document.getElementById('input').disabled = true;
+  var words = document.getElementById('words');
+  for (var i = 1; i < words.rows.length; i++) {
+    words.rows[i].cells[1].innerHTML = words.rows[i].cells[0].length;
+  }
+}
+
+
 window.onload = function () {
   var field = new Field();
   displayTime();
@@ -121,7 +130,7 @@ window.onload = function () {
     displayTime();
     if (seconds == 0) {
       clearInterval(id);
-      document.getElementById('input').disabled = true;
+      gameOver();
     }
   }, 1000);
 };
