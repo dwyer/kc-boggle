@@ -1,5 +1,6 @@
 body {
   text-align: center;
+  font-family: sans-serif;
 }
 
 table {
@@ -34,6 +35,12 @@ table#field tr td {
   font-weight: bold;
 }
 
+#input {
+  font-size: medium;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 #input.valid {
   color: green;
 }
@@ -46,7 +53,8 @@ table#words {
   width: 200px;
 }
 
-table#words tr th:first-child {
+table#words tr td:first-child {
+  text-transform: uppercase;
   width: 100%;
 }
 

@@ -27,6 +27,13 @@ function Field() {
     for (var col = 0; col < this.range; col++) {
       var cell = this.table.rows[row].cells[col];
       cell.neighbors = [];
+      cell.focus = function () {
+        this.className = 'infocus';
+      };
+      cell.selected = function (opt_bool) {
+        if (typeof opt_bool == 'boolean') this.className = opt_bool ? 'selected' : null;
+        return this.className == 'selected';
+      };
       for (var i = -1; i <= 1; i++) {
         if (row + i >= 0 && row + i < this.range) {
           for (var j = -1; j <= 1; j++) {
@@ -45,7 +52,7 @@ function Field() {
 
 
 /**
- * Get the letter contains at (row, col) of the Field.
+ * Get the letter contained at (row, col) of the Field.
  */
 Field.prototype.getLetter = function (row, col) {
   return this.table.rows[row].cells[col].innerHTML;
@@ -64,56 +71,84 @@ Field.prototype.putLetter = function (row, col, letter) {
  * Handles word input and submission.
  */
 function handleInput(input) {
-  // deselect all cells
-  for (var i = 0; i < cells.length; i++) {
-    cells[i].className = null;
-  }
-  // validate
-  var isValid = check(input.value.toUpperCase(), cells) && input.value.length >= 3;
-  if (isValid) {
-    input.className = 'valid';
-  } else {
-    input.className = 'invalid';
-  }
+  var word = input.value.toLowerCase();
+  var isValid = validateWord(word);
+  input.className = isValid ? 'valid' : 'invalid';
   // handle submission
   if (window.event && window.event.keyCode == 13 && isValid) {
-    var word = document.createTextNode(input.value);
-    var button = document.createElement('button');
-    button.innerHTML = '&times;';
-    button.onclick = function () {
-      var child = this.parentNode.parentNode;
-      child.parentNode.removeChild(child);
-    };
-    var words = document.getElementById('words');
-    var row = 1;
-    words.insertRow(row);
-    words.rows[row].insertCell(0);
-    words.rows[row].insertCell(1);
-    words.rows[row].cells[0].appendChild(word);
-    words.rows[row].cells[1].appendChild(button);
+    submitWord(word);
     input.value = '';
   }
 }
 
 
 /**
- * Check the word against an array of letters to determine its validity.
+ * Checks to make sure the word is valid and not a duplicate.
  */
-function check(word, array) {
+function validateWord(word) {
+  // deselect all cells before validating letters
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].className = null;
+  }
+  return validateLetters(word, cells) && validateSize(word) && words.indexOf(word) == -1;
+}
+
+
+/**
+ * Checks to make sure the word makes legal use of the letters provided.
+ */
+function validateLetters(word, array) {
   for (var i = 0; i < array.length; i++) {
-    if (array[i].innerHTML == word[0] && array[i].className != 'selected') {
-      array[i].className = 'selected';
+    var cell = array[i];
+    if (cell.innerHTML == word[0].toUpperCase() && !cell.selected()) {
+      cell.selected(true);
       if (word.length == 1) {
-        array[i].className = 'infocus';
+        cell.focus();
         return true;
-      } else if (check(word.slice(1), array[i].neighbors)) {
+      } else if (validateLetters(word.slice(1), cell.neighbors)) {
         return true;
       } else {
-        array[i].className = null;
+        cell.selected(false);
       }
     }
   }
   return false;
+}
+
+
+/**
+ * Checks to make sure the word is between three and eight characters long.
+ * The eight character limited is provided by the included dictionary.
+ */
+function validateSize(word) {
+  return word.length >= 3 && word.length <= 8;
+}
+
+
+/**
+ * Submit word.
+ */
+function submitWord(word) {
+  var table = document.getElementById('words');
+  var row = table.insertRow(1);
+  row.insertCell(0);
+  row.insertCell(1);
+  row.cells[0].appendChild(document.createTextNode(word));
+  row.cells[1].appendChild(createDeleteButton(row));
+  words.push(word);
+}
+
+
+/**
+ * Create button to delete the given object.
+ */
+function createDeleteButton(object) {
+  var button = document.createElement('button');
+  button.innerHTML = '&times;';
+  button.onclick = function () {
+    object.parentNode.removeChild(object);
+  };
+  return button;
 }
 
 
